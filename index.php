@@ -4,20 +4,24 @@ ini_set("display_errors", 1);
 MongoLog::setLevel(MongoLog::ALL); // all log levels
 
 // MongoDB backend
-$mongoAuth = getenv("BACKGRIDMONGOAUTH");
+$mongoURI = getenv("BACKGRIDMONGOAUTH");
+$options = array("connectTimeoutMS" => 30000);
 
 // DB connection
 try {
     // open connection to MongoDB server
-    $mongoDB = new MongoClient($mongoAuth);
+    $mongoClient = new MongoClient($uri, $options );
+
+    // Select database
+    $territoriesDB = $mongoClient->selectDB("backgrid-demo");
 } catch (MongoConnectionException $e) {            
-    die('Error connecting to MongoDB server');
+    die('Error connecting to MongoDB server:' . $e->getMessage());
 } catch (MongoException $e) {           
     die('Error: ' . $e->getMessage());
 }
-/*
-// Territories collection
-$territories = $mongoDB->territories;
+
+// Close database connection
+$mongoClient->close();
 
 // GET REST API
 if (if ($_SERVER['REQUEST_METHOD'] === 'GET') && isset($_GET["territories"])) {
@@ -29,4 +33,4 @@ if (if ($_SERVER['REQUEST_METHOD'] === 'GET') && isset($_GET["territories"])) {
 }
 else {
     die("invalid request");
-}*/
+}
