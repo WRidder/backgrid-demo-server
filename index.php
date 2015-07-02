@@ -21,7 +21,7 @@ try {
 $territoriesDB = $mongoClient->selectDB("backgrid-demo");
 
 // GET REST API
-if (if ($_SERVER['REQUEST_METHOD'] === 'GET') && isset($_GET["territories"])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET["territories"])) {
     $filter = !empty($_GET["territories"]) ? json_decode($_GET["territories"]) : array();
     $returnValue = $territoriesDB.find($filter);
 
