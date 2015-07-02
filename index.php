@@ -9,7 +9,7 @@ $mongoAuth = getenv("BACKGRIDMONGOAUTH");
 // DB connection
 try {
     // open connection to MongoDB server
-    $mongoDB = new MongoClient("mongodb://" . $mongoAuth);
+    $mongoDB = new MongoClient($mongoAuth);
 } catch (MongoConnectionException $e) {            
     die('Error connecting to MongoDB server');
 } catch (MongoException $e) {           
