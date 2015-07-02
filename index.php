@@ -5,6 +5,9 @@ ini_set("display_errors", 1);
 // MongoDB backend
 $mongoAuth = getenv("BACKGRIDMONGOAUTH");
 
+echo "test";
+echo $mongoAuth;
+/*
 // DB connection
  try {
         // open connection to MongoDB server
@@ -28,4 +31,4 @@ if (if ($_SERVER['REQUEST_METHOD'] === 'GET') && isset($_GET["territories"])) {
 }
 else {
     die("invalid request");
-}
+}*/
