@@ -10,7 +10,7 @@ $options = array("connectTimeoutMS" => 30000);
 // DB connection
 try {
     // open connection to MongoDB server
-    $mongoClient = new MongoClient($uri, $options );
+    $mongoClient = new MongoClient($mongoURI, $options );
 
     // Select database
     $territoriesDB = $mongoClient->selectDB("backgrid-demo");
