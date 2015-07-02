@@ -10,27 +10,29 @@ $options = array("connectTimeoutMS" => 30000);
 // DB connection
 try {
     // open connection to MongoDB server
-    $mongoClient = new MongoClient($mongoURI, $options );
-
-    // Select database
-    $territoriesDB = $mongoClient->selectDB("backgrid-demo");
+    $mongoClient = new MongoClient($mongoURI, $options);
 } catch (MongoConnectionException $e) {            
     die('Error connecting to MongoDB server:' . $e->getMessage());
 } catch (MongoException $e) {           
     die('Error: ' . $e->getMessage());
 }
 
-// Close database connection
-$mongoClient->close();
+// Select database
+$territoriesDB = $mongoClient->selectDB("backgrid-demo");
 
 // GET REST API
 if (if ($_SERVER['REQUEST_METHOD'] === 'GET') && isset($_GET["territories"])) {
     $filter = !empty($_GET["territories"]) ? json_decode($_GET["territories"]) : array();
-    $returnValue = $territories.find($filter);
+    $returnValue = $territoriesDB.find($filter);
+
+    // Close database connection
+    $mongoClient->close();
 
     // Return result
     exit(json_encode(iterator_to_array($returnValue)));
 }
 else {
+    // Close database connection
+    $mongoClient->close();
     die("invalid request");
 }
