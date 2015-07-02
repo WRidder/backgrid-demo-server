@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
+MongoLog::setLevel(MongoLog::ALL); // all log levels
 
 // MongoDB backend
 $mongoAuth = getenv("BACKGRIDMONGOAUTH");
@@ -8,7 +9,7 @@ $mongoAuth = getenv("BACKGRIDMONGOAUTH");
 // DB connection
 try {
     // open connection to MongoDB server
-    $mongoDB = new MongoClient($mongoAuth);
+    $mongoDB = new MongoClient("mongodb://" . $mongoAuth);
 } catch (MongoConnectionException $e) {            
     die('Error connecting to MongoDB server');
 } catch (MongoException $e) {           
